@@ -97,6 +97,23 @@ const ko: Dictionary = {
     label: "언어 선택",
   },
   demoModeNotice: "지금은 GEMINI_API_KEY가 설정되기 전이라 예시 데이터로 미리보기를 보여드리고 있어요.",
+  paywall: {
+    usedBadge: "무료 분석 3회를 모두 사용했어요",
+    title: "냉장고 한상 플러스로 계속 이용해보세요",
+    body: "구독하면 사진 분석 횟수 제한 없이 계속 레시피를 추천받을 수 있어요.",
+    monthlyLabel: "월간",
+    yearlyLabel: "연간",
+    yearlySavings: "연간 결제 시 {percent}% 절약",
+    billingNote: "PayPal을 통해 안전하게 결제돼요 · 언제든 해지 가능 · 카드 정보는 PayPal 결제창에만 입력해요.",
+    priceLoadError: "가격 정보를 불러오지 못했어요.",
+    payButton: "PayPal로 결제하기",
+    loadingButton: "PayPal로 이동하는 중...",
+    startError: "결제를 시작할 수 없어요. 잠시 후 다시 시도해주세요.",
+    subscribedNotice: "구독이 시작됐어요! 이제 계속 이용하실 수 있어요.",
+    cancelledNotice: "결제가 취소됐어요.",
+    verifyErrorNotice: "결제 확인에 실패했어요. 문제가 계속되면 문의해주세요.",
+    verifying: "결제를 확인하는 중이에요...",
+  },
 };
 
 export default ko;

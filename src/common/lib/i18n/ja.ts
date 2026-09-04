@@ -97,6 +97,23 @@ const ja: Dictionary = {
     label: "言語選択",
   },
   demoModeNotice: "GEMINI_API_KEYが未設定のため、現在は例データでプレビューを表示しています。",
+  paywall: {
+    usedBadge: "無料分析3回をすべて使い切りました",
+    title: "冷蔵庫ごはんプラスで引き続きご利用ください",
+    body: "購読すると、写真分析の回数制限なしでレシピの提案を受け続けられます。",
+    monthlyLabel: "月額",
+    yearlyLabel: "年額",
+    yearlySavings: "年額プランで{percent}%お得",
+    billingNote: "PayPalで安全に決済されます・いつでも解約可能・カード情報はPayPalの決済画面にのみ入力します。",
+    priceLoadError: "料金情報を読み込めませんでした。",
+    payButton: "PayPalで決済する",
+    loadingButton: "PayPalに移動しています...",
+    startError: "決済を開始できませんでした。しばらくしてから再度お試しください。",
+    subscribedNotice: "購読が開始されました！引き続きご利用いただけます。",
+    cancelledNotice: "決済がキャンセルされました。",
+    verifyErrorNotice: "決済の確認に失敗しました。問題が続く場合はお問い合わせください。",
+    verifying: "決済を確認しています...",
+  },
 };
 
 export default ja;

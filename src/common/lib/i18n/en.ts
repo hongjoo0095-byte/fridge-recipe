@@ -97,6 +97,23 @@ const en: Dictionary = {
     label: "Language",
   },
   demoModeNotice: "GEMINI_API_KEY isn't set yet, so this preview is showing example data.",
+  paywall: {
+    usedBadge: "You've used all 3 free analyses",
+    title: "Keep going with Fridge Feast Plus",
+    body: "Subscribe to keep getting recipe recommendations with no limit on photo analyses.",
+    monthlyLabel: "Monthly",
+    yearlyLabel: "Yearly",
+    yearlySavings: "Save {percent}% with yearly billing",
+    billingNote: "Paid securely via PayPal · Cancel anytime · Card details are entered only on PayPal's checkout.",
+    priceLoadError: "Couldn't load the price.",
+    payButton: "Pay with PayPal",
+    loadingButton: "Redirecting to PayPal...",
+    startError: "Couldn't start checkout. Please try again shortly.",
+    subscribedNotice: "Your subscription is active! You can keep using the app now.",
+    cancelledNotice: "Payment was cancelled.",
+    verifyErrorNotice: "Couldn't verify the payment. Please contact support if this keeps happening.",
+    verifying: "Verifying your payment...",
+  },
 };
 
 export default en;

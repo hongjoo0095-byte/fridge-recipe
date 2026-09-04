@@ -4,14 +4,19 @@ import { useRef } from "react";
 import { useLocale } from "@/common/lib/i18n/LocaleProvider";
 import type { RecentEntry } from "@/app/lib/recentStore";
 
+type PaypalNotice = { type: "verifying" | "subscribed" | "cancelled" | "error" } | null;
+
 export function HomeScreen({
   onFileSelected,
   error,
   recent,
+  paypalNotice,
 }: {
   onFileSelected: (file: File) => void;
   error: string | null;
   recent: RecentEntry[];
+  /** PayPal 결제창에서 돌아온 직후에만 잠깐 보여주는 결과 배너(page.tsx가 관리). */
+  paypalNotice?: PaypalNotice;
 }) {
   const { t } = useLocale();
   const cameraInputRef = useRef<HTMLInputElement>(null);
@@ -29,6 +34,25 @@ export function HomeScreen({
       <p className="mt-1.5 text-[16px] leading-snug text-ink-soft">
         {t.header.subtitleLines[0]} {t.header.subtitleLines[1]}
       </p>
+
+      {paypalNotice?.type === "subscribed" && (
+        <p className="mt-4 rounded-2xl bg-accent-tint px-4 py-3 text-[15px] font-semibold text-accent-deep">
+          {t.paywall.subscribedNotice}
+        </p>
+      )}
+      {paypalNotice?.type === "verifying" && (
+        <p className="mt-4 rounded-2xl bg-surface-2 px-4 py-3 text-[15px] text-ink-soft">{t.paywall.verifying}</p>
+      )}
+      {paypalNotice?.type === "cancelled" && (
+        <p className="mt-4 rounded-2xl bg-surface-2 px-4 py-3 text-[15px] text-ink-soft">
+          {t.paywall.cancelledNotice}
+        </p>
+      )}
+      {paypalNotice?.type === "error" && (
+        <p className="mt-4 rounded-2xl bg-danger-tint px-4 py-3 text-[15px] text-danger">
+          {t.paywall.verifyErrorNotice}
+        </p>
+      )}
 
       {error && (
         <p className="mt-4 rounded-2xl bg-danger-tint px-4 py-3 text-[15px] text-danger">{error}</p>

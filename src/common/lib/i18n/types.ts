@@ -102,4 +102,22 @@ export interface Dictionary {
     label: string;
   };
   demoModeNotice: string;
+  paywall: {
+    usedBadge: string;
+    title: string;
+    body: string;
+    monthlyLabel: string;
+    yearlyLabel: string;
+    /** "{percent}"를 실제 절약률로 치환해서 쓴다. */
+    yearlySavings: string;
+    billingNote: string;
+    priceLoadError: string;
+    payButton: string;
+    loadingButton: string;
+    startError: string;
+    subscribedNotice: string;
+    cancelledNotice: string;
+    verifyErrorNotice: string;
+    verifying: string;
+  };
 }

@@ -3,6 +3,7 @@
 import { useLocale } from "@/common/lib/i18n/LocaleProvider";
 import BackButton from "@/common/components/BackButton";
 import type { RecipeRole, RecipeSuggestion } from "@/app/lib/types";
+import { PaywallCard } from "@/app/components/PaywallCard";
 
 const ROLE_STYLE: Record<RecipeRole, { badge: string; bar: string }> = {
   fastest: { badge: "bg-accent-tint text-accent-deep", bar: "bg-accent" },
@@ -48,10 +49,13 @@ export function RecipeResultsScreen({
   recipes,
   onOpenDetail,
   onEditIngredients,
+  showPaywall,
 }: {
   recipes: RecipeSuggestion[];
   onOpenDetail: (id: string) => void;
   onEditIngredients: () => void;
+  /** 무료 사진 분석 3회를 다 쓴 뒤부터 true — 추천 결과는 그대로 두고 맨 아래에만 결제 카드를 덧붙인다. */
+  showPaywall: boolean;
 }) {
   const { t } = useLocale();
 
@@ -102,6 +106,8 @@ export function RecipeResultsScreen({
           );
         })}
       </div>
+
+      {showPaywall && <PaywallCard />}
     </div>
   );
 }
