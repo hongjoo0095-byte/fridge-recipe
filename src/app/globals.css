@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+:root {
+    --background: oklch(0.97 0.022 75);
+    --foreground: oklch(0.24 0.035 40);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-noto-sans-kr), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+    /* 냉장고 레시피 — 따뜻한 아이보리 배경 + 코랄·살구·골드 포인트.
+       초록/남색은 전혀 쓰지 않는다(요청에 따라 완전히 제거). */
+    --color-page: oklch(0.97 0.022 75);
+    --color-surface: oklch(0.995 0.012 75);
+    --color-surface-2: oklch(0.945 0.028 68);
+    --color-ink: oklch(0.24 0.035 40);
+    --color-ink-soft: oklch(0.46 0.032 42);
+    --color-ink-faint: oklch(0.62 0.026 46);
+    --color-hairline: oklch(0.89 0.028 60);
+
+    /* 코랄 — 가장 빠른 메뉴 배지 · 기본 버튼 */
+    --color-accent: oklch(0.66 0.2 22);
+    --color-accent-deep: oklch(0.5 0.18 18);
+    --color-accent-tint: oklch(0.92 0.06 22);
+
+    /* 골드 — 의외의 조합 배지 */
+    --color-gold: oklch(0.78 0.13 85);
+    --color-gold-deep: oklch(0.48 0.1 70);
+    --color-gold-tint: oklch(0.94 0.05 85);
+
+    /* 살구/테라코타 — 재료를 가장 많이 쓰는 메뉴 배지. 코랄과 뚜렷이 구분되도록
+       색상각을 골드 쪽으로 크게 밀고 채도를 높인 짙은 오렌지-브라운 톤을 쓴다. */
+    --color-apricot: oklch(0.7 0.15 55);
+    --color-apricot-deep: oklch(0.42 0.11 40);
+    --color-apricot-tint: oklch(0.88 0.08 55);
+
+    /* 경고/오류 — 코랄과 구분되는 짙은 적갈색 */
+    --color-danger: oklch(0.46 0.15 18);
+    --color-danger-tint: oklch(0.93 0.04 18);
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 분석 중 화면 — 재료를 하나씩 찾아내는 진행 애니메이션(AnalyzingScreen.tsx)에서 쓴다. */
+@keyframes fridge-scan-row {
+    0%, 100% { opacity: 0.32; transform: translateX(0) scale(0.96); }
+    18% { opacity: 1; transform: translateX(2px) scale(1); }
+    38% { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes fridge-scan-check {
+    0%, 32% { opacity: 0; transform: scale(0.4); }
+    42%, 92% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.4); }
+}
