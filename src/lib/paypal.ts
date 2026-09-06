@@ -3,6 +3,9 @@
  * Plan) 리다이렉트 방식을 그대로 따르되, 이 앱은 월간/연간 두 개의 요금제를 다룬다.
  * PAYPAL_CLIENT_SECRET은 이 파일 밖으로 절대 나가지 않고, 클라이언트는 이 파일이
  * 만들어준 승인(approve) URL로 브라우저 자체를 이동시키기만 한다.
+ *
+ * 주의: Vercel은 환경변수를 대시보드에서 추가/수정해도 이미 배포된 서버리스 함수에는
+ * 자동 반영되지 않는다 — 새 값을 쓰려면 재배포(Redeploy)가 한 번 더 필요하다.
  */
 
 const SANDBOX_BASE = "https://api-m.sandbox.paypal.com";
