@@ -3,8 +3,8 @@ import type { Dictionary } from "./types";
 const ko: Dictionary = {
   languageName: "한국어",
   header: {
-    title: "냉장고 한상",
-    subtitleLines: ["냉장고를 촬영하면", "오늘 만들 수 있는 요리를 추천해드려요"],
+    title: "냉장고 차림표",
+    subtitleLines: ["냉장고를 촬영하면", "맛있는 레시피를 추천해드려요."],
   },
   home: {
     captureCta: "지금 촬영하고 추천받기",
