@@ -1,0 +1,39 @@
+name: diag-recipe-image
+on:
+  push:
+    branches: [diag/recipe-image-check]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check homepage is reachable
+        run: |
+          curl -sS -o /dev/null -w "homepage HTTP:%{http_code}\n" https://fridge-recipe-blue.vercel.app/
+
+      - name: Call /api/recipe-image and report structure only (no secrets, no full image data)
+        run: |
+          HTTP_CODE=$(curl -sS -o response.json -w "%{http_code}" -X POST \
+            https://fridge-recipe-blue.vercel.app/api/recipe-image \
+            -H "Content-Type: application/json" \
+            -d '{"title":"테스트 김치찌개","usedIngredients":["김치","두부"],"missingIngredients":["돼지고기"],"locale":"ko"}')
+          echo "api HTTP status: $HTTP_CODE"
+          echo "response byte size: $(wc -c < response.json)"
+
+          if grep -q '"image":"data:' response.json; then
+            echo "RESULT: image field present (real image data returned)"
+            python3 -c "
+import json
+with open('response.json') as f:
+    d = json.load(f)
+img = d.get('image','')
+print('image data URL prefix:', img[:30])
+print('base64 payload length:', len(img.split(\",\",1)[-1]) if \",\" in img else 0)
+"
+          elif grep -qo '"error":"[a-zA-Z_]*"' response.json; then
+            echo "RESULT: error field present"
+            grep -o '"error":"[a-zA-Z_]*"' response.json
+          else
+            echo "RESULT: unexpected response shape"
+            head -c 300 response.json
+          fi
