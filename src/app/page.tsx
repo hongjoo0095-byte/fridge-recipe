@@ -14,6 +14,7 @@ import {
   shouldShowPaywall,
   type SubscriptionState,
 } from "@/app/lib/subscriptionStore";
+import { useRecipeImages } from "@/app/lib/useRecipeImages";
 import type { RecipeSuggestion, RecognizedIngredient } from "@/app/lib/types";
 import { HomeScreen } from "@/app/components/HomeScreen";
 import { AnalyzingScreen } from "@/app/components/AnalyzingScreen";
@@ -181,6 +182,8 @@ export default function Home() {
   }
 
   const selectedRecipe = recipes.find((r) => r.id === selectedRecipeId) ?? null;
+  // 결과 화면과 상세 화면이 같은 캐시를 공유해 레시피당 이미지 생성 요청이 한 번만 나가게 한다.
+  const recipeImages = useRecipeImages(recipes, locale);
 
   return (
     <MobileShell>
@@ -210,6 +213,7 @@ export default function Home() {
       {screen === "results" && (
         <RecipeResultsScreen
           recipes={recipes}
+          images={recipeImages}
           onOpenDetail={(id) => {
             setSelectedRecipeId(id);
             setScreen("detail");
@@ -220,7 +224,11 @@ export default function Home() {
       )}
 
       {screen === "detail" && selectedRecipe && (
-        <RecipeDetailScreen recipe={selectedRecipe} onBack={() => setScreen("results")} />
+        <RecipeDetailScreen
+          recipe={selectedRecipe}
+          imageState={recipeImages[selectedRecipe.id]}
+          onBack={() => setScreen("results")}
+        />
       )}
     </MobileShell>
   );

@@ -4,6 +4,8 @@ import { useLocale } from "@/common/lib/i18n/LocaleProvider";
 import BackButton from "@/common/components/BackButton";
 import type { RecipeRole, RecipeSuggestion } from "@/app/lib/types";
 import { PaywallCard } from "@/app/components/PaywallCard";
+import { RecipeImage } from "@/app/components/RecipeImage";
+import type { RecipeImageState } from "@/app/lib/useRecipeImages";
 
 const ROLE_STYLE: Record<RecipeRole, { badge: string; bar: string }> = {
   fastest: { badge: "bg-accent-tint text-accent-deep", bar: "bg-accent" },
@@ -47,11 +49,14 @@ const MissingIcon = (
 
 export function RecipeResultsScreen({
   recipes,
+  images,
   onOpenDetail,
   onEditIngredients,
   showPaywall,
 }: {
   recipes: RecipeSuggestion[];
+  /** recipe.id -> 완성 음식 사진 로딩 상태 (page.tsx의 useRecipeImages 결과를 그대로 받는다). */
+  images: Record<string, RecipeImageState>;
   onOpenDetail: (id: string) => void;
   onEditIngredients: () => void;
   /** 무료 사진 분석 3회를 다 쓴 뒤부터 true — 추천 결과는 그대로 두고 맨 아래에만 결제 카드를 덧붙인다. */
@@ -76,31 +81,34 @@ export function RecipeResultsScreen({
               key={recipe.id}
               type="button"
               onClick={() => onOpenDetail(recipe.id)}
-              className="relative overflow-hidden rounded-[24px] border border-hairline bg-surface p-4 text-left shadow-[0_16px_32px_-16px_rgba(120,70,40,0.35)] transition active:scale-[0.99]"
+              className="relative overflow-hidden rounded-[24px] border border-hairline bg-surface text-left shadow-[0_16px_32px_-16px_rgba(120,70,40,0.35)] transition active:scale-[0.99]"
             >
-              <span className={`absolute inset-y-0 left-0 w-1.5 ${style.bar}`} />
-              <div className="pl-2">
-                <span className={`inline-block rounded-full px-3 py-1.5 text-[14px] font-extrabold ${style.badge}`}>
-                  {t.recipes.roleLabel[recipe.role]}
-                </span>
-                <div className="mt-2.5 text-[20px] font-extrabold leading-snug text-ink">{recipe.title}</div>
-                <div className="mt-0.5 text-[14.5px] text-ink-faint">{t.recipes.roleHint[recipe.role]}</div>
-
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <StatChip icon={ClockIcon} label={`${recipe.cookTimeMinutes}${t.recipes.minutesUnit}`} />
-                  <StatChip icon={GaugeIcon} label={t.recipes.difficulty[recipe.difficulty]} />
-                  <StatChip icon={PeopleIcon} label={`${recipe.servings}${t.recipes.servingsUnit}`} />
-                </div>
-
-                <div className="mt-2.5 flex items-start gap-1.5 text-[15px] text-ink-soft">
-                  <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center text-apricot-deep">{MissingIcon}</span>
-                  <span>
-                    <span className="font-semibold text-ink">{t.recipes.missingLabel}: </span>
-                    {recipe.missingIngredients.length > 0 ? recipe.missingIngredients.join(", ") : t.recipes.missingNone}
+              <RecipeImage state={images[recipe.id]} alt={recipe.title} />
+              <div className="relative p-4">
+                <span className={`absolute inset-y-0 left-0 w-1.5 ${style.bar}`} />
+                <div className="pl-2">
+                  <span className={`inline-block rounded-full px-3 py-1.5 text-[14px] font-extrabold ${style.badge}`}>
+                    {t.recipes.roleLabel[recipe.role]}
                   </span>
-                </div>
+                  <div className="mt-2.5 text-[20px] font-extrabold leading-snug text-ink">{recipe.title}</div>
+                  <div className="mt-0.5 text-[14.5px] text-ink-faint">{t.recipes.roleHint[recipe.role]}</div>
 
-                <div className="mt-3 text-right text-[15px] font-bold text-accent-deep">{t.recipes.openDetail} ›</div>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    <StatChip icon={ClockIcon} label={`${recipe.cookTimeMinutes}${t.recipes.minutesUnit}`} />
+                    <StatChip icon={GaugeIcon} label={t.recipes.difficulty[recipe.difficulty]} />
+                    <StatChip icon={PeopleIcon} label={`${recipe.servings}${t.recipes.servingsUnit}`} />
+                  </div>
+
+                  <div className="mt-2.5 flex items-start gap-1.5 text-[15px] text-ink-soft">
+                    <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center text-apricot-deep">{MissingIcon}</span>
+                    <span>
+                      <span className="font-semibold text-ink">{t.recipes.missingLabel}: </span>
+                      {recipe.missingIngredients.length > 0 ? recipe.missingIngredients.join(", ") : t.recipes.missingNone}
+                    </span>
+                  </div>
+
+                  <div className="mt-3 text-right text-[15px] font-bold text-accent-deep">{t.recipes.openDetail} ›</div>
+                </div>
               </div>
             </button>
           );

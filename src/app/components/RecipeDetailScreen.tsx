@@ -6,8 +6,18 @@ import BackButton from "@/common/components/BackButton";
 import { copyText, shareText } from "@/common/lib/shareText";
 import { buildRecipeShareFileName, buildRecipeShareText } from "@/app/lib/fridgeShare";
 import type { RecipeSuggestion } from "@/app/lib/types";
+import { RecipeImage } from "@/app/components/RecipeImage";
+import type { RecipeImageState } from "@/app/lib/useRecipeImages";
 
-export function RecipeDetailScreen({ recipe, onBack }: { recipe: RecipeSuggestion; onBack: () => void }) {
+export function RecipeDetailScreen({
+  recipe,
+  imageState,
+  onBack,
+}: {
+  recipe: RecipeSuggestion;
+  imageState: RecipeImageState | undefined;
+  onBack: () => void;
+}) {
   const { t } = useLocale();
   const [status, setStatus] = useState<string | null>(null);
 
@@ -31,7 +41,9 @@ export function RecipeDetailScreen({ recipe, onBack }: { recipe: RecipeSuggestio
           <BackButton onClick={onBack} aria-label={t.actions.back} />
         </div>
 
-        <h1 className="text-[22px] font-extrabold leading-snug text-ink">{recipe.title}</h1>
+        <RecipeImage state={imageState} alt={recipe.title} rounded="rounded-[22px]" />
+
+        <h1 className="mt-4 text-[22px] font-extrabold leading-snug text-ink">{recipe.title}</h1>
         <div className="mt-1.5 flex flex-wrap gap-2">
           <span className="rounded-full bg-surface-2 px-3 py-1 text-[14.5px] font-semibold text-ink">
             {recipe.cookTimeMinutes}
