@@ -40,12 +40,6 @@ const PeopleIcon = (
     <path d="M5.5 20a6.5 6.5 0 0113 0" />
   </svg>
 );
-const MissingIcon = (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-full w-full">
-    <path d="M12 9v4M12 16.5v.01" />
-    <path d="M10.3 4.5L2.9 18a1.6 1.6 0 001.4 2.4h15.4a1.6 1.6 0 001.4-2.4L13.7 4.5a1.6 1.6 0 00-3.4 0z" />
-  </svg>
-);
 
 export function RecipeResultsScreen({
   recipes,
@@ -100,11 +94,18 @@ export function RecipeResultsScreen({
                   </div>
 
                   <div className="mt-2.5 flex items-start gap-1.5 text-[15px] text-ink-soft">
-                    <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center text-apricot-deep">{MissingIcon}</span>
-                    <span>
-                      <span className="font-semibold text-ink">{t.recipes.missingLabel}: </span>
-                      {recipe.missingIngredients.length > 0 ? recipe.missingIngredients.join(", ") : t.recipes.missingNone}
-                    </span>
+                    {recipe.missingIngredients.length > 0 ? (
+                      <span>
+                        <span aria-hidden="true">⚠️ </span>
+                        <span className="font-semibold text-ink">{t.recipes.missingLabel}: </span>
+                        {recipe.missingIngredients.join(", ")}
+                      </span>
+                    ) : (
+                      <span className="font-semibold text-ink">
+                        <span aria-hidden="true">✅ </span>
+                        {t.recipes.missingNone}
+                      </span>
+                    )}
                   </div>
 
                   <div className="mt-3 text-right text-[15px] font-bold text-accent-deep">{t.recipes.openDetail} ›</div>
