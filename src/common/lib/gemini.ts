@@ -121,7 +121,11 @@ export type GeminiImageCallResult =
   | { ok: true; mimeType: string; base64: string }
   | { ok: false; kind: GeminiErrorKind };
 
-/** Gemini generateContent 응답 JSON에서 첫 후보의 이미지(inline_data) 파트를 꺼낸다. */
+/** Gemini generateContent 응답 JSON에서 첫 후보의 이미지 파트를 꺼낸다.
+ *  요청은 snake_case(inline_data/mime_type)를 보내도 Google이 관대하게 받아주지만,
+ *  응답은 proto3 JSON 규칙에 따라 항상 camelCase(inlineData/mimeType)로 온다 — 이
+ *  둘을 혼동하면 이미지가 실제로는 정상 생성됐는데도 매번 "이미지를 못 찾음"으로
+ *  잘못 판정해 기본 아이콘만 뜨는 상태가 된다. 두 표기를 모두 지원한다. */
 export function extractGeminiImage(responseJson: unknown): { mimeType: string; base64: string } | null {
   if (typeof responseJson !== "object" || responseJson === null) return null;
   const candidates = (responseJson as { candidates?: unknown }).candidates;
@@ -129,13 +133,19 @@ export function extractGeminiImage(responseJson: unknown): { mimeType: string; b
   const content = (candidates[0] as { content?: unknown } | undefined)?.content;
   const parts = (content as { parts?: unknown } | undefined)?.parts;
   if (!Array.isArray(parts)) return null;
-  const imagePart = parts.find(
-    (part): part is { inline_data: { mime_type: string; data: string } } =>
-      typeof (part as { inline_data?: { data?: unknown; mime_type?: unknown } } | undefined)?.inline_data
-        ?.data === "string",
-  );
-  if (!imagePart) return null;
-  return { mimeType: imagePart.inline_data.mime_type || "image/png", base64: imagePart.inline_data.data };
+
+  for (const part of parts) {
+    const inline =
+      (part as { inlineData?: unknown; inline_data?: unknown } | undefined)?.inlineData ??
+      (part as { inlineData?: unknown; inline_data?: unknown } | undefined)?.inline_data;
+    const data = (inline as { data?: unknown } | undefined)?.data;
+    if (typeof data === "string") {
+      const mimeType = (inline as { mimeType?: unknown; mime_type?: unknown }).mimeType ??
+        (inline as { mimeType?: unknown; mime_type?: unknown }).mime_type;
+      return { mimeType: typeof mimeType === "string" && mimeType ? mimeType : "image/png", base64: data };
+    }
+  }
+  return null;
 }
 
 /**
