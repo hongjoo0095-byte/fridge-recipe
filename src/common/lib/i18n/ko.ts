@@ -47,7 +47,7 @@ const ko: Dictionary = {
     difficulty: { easy: "쉬움", medium: "보통", hard: "어려움" },
     usedLabel: "사용 재료",
     missingLabel: "부족한 재료",
-    missingNone: "가진 재료로 바로 조리 가능",
+    missingNone: "추가 재료 없이 바로 만들 수 있어요",
     openDetail: "조리법 보기",
     editIngredients: "재료 다시 고치기",
   },
