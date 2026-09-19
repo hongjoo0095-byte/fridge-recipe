@@ -93,9 +93,12 @@ export function isPaidUser(state: SubscriptionState): boolean {
 
 /**
  * 무료 횟수(FREE_ANALYSIS_LIMIT)를 다 쓴 뒤부터 결제 화면을 보여줘야 하는지 —
- * 다만 이 앱은 추천 결과 자체를 가리지 않고, 결과 화면 맨 아래에 자연스럽게
- * 결제 카드를 추가로 붙이는 방식이다(RecipeResultsScreen.tsx 참고).
+ * usageCount는 "지금까지 성공한 분석 횟수"이므로, 3번째 분석이 성공한 시점에
+ * 이미 무료 한도를 다 쓴 것이다(>= 비교). 결과 화면(RecipeResultsScreen)에서는
+ * 그 3번째 결과 자체를 가리지 않고 맨 아래에 결제 카드만 자연스럽게 붙이고,
+ * 다음(4번째) 촬영 시도부터는 홈 화면(page.tsx)이 촬영 버튼 대신 이 카드로
+ * 막는다.
  */
 export function shouldShowPaywall(usageCount: number, subscription: SubscriptionState): boolean {
-  return !isPaidUser(subscription) && usageCount > FREE_ANALYSIS_LIMIT;
+  return !isPaidUser(subscription) && usageCount >= FREE_ANALYSIS_LIMIT;
 }

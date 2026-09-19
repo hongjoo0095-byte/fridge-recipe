@@ -119,6 +119,10 @@ export default function Home() {
   }, []);
 
   async function runAnalysis(file: File) {
+    // 무료 3회를 다 쓴 뒤에는(홈 화면이 촬영 버튼 대신 결제 카드를 보여주지만) 방어적으로
+    // 여기서도 한 번 더 막는다 — 결제한 사용자는 통과한다.
+    if (shouldShowPaywall(usageCount, subscription)) return;
+
     setHomeError(null);
     setScreen("analyzing");
     try {
@@ -193,6 +197,7 @@ export default function Home() {
           error={homeError}
           recent={recent}
           paypalNotice={paypalNotice}
+          showPaywall={shouldShowPaywall(usageCount, subscription)}
         />
       )}
 
