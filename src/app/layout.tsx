@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans_KR } from "next/font/google";
 import { LocaleProvider } from "@/common/lib/i18n/LocaleProvider";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const notoSansKR = Noto_Sans_KR({
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ko" className={`h-full antialiased ${notoSansKR.variable}`}>
       <body className="min-h-full flex flex-col bg-page text-ink font-sans">
         <LocaleProvider>{children}</LocaleProvider>
+        <Analytics />
       </body>
     </html>
   );
