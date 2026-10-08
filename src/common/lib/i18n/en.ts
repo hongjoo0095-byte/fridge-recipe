@@ -98,7 +98,7 @@ const en: Dictionary = {
   },
   demoModeNotice: "GEMINI_API_KEY isn't set yet, so this preview is showing example data.",
   paywall: {
-    usedBadge: "You've used all 3 free analyses",
+    usedBadge: "You've used all 5 free analyses",
     title: "Keep going with Fridge Feast Plus",
     body: "Subscribe to keep getting recipe recommendations with no limit on photo analyses.",
     monthlyLabel: "Monthly",
