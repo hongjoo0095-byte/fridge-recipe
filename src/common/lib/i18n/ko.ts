@@ -98,7 +98,7 @@ const ko: Dictionary = {
   },
   demoModeNotice: "지금은 GEMINI_API_KEY가 설정되기 전이라 예시 데이터로 미리보기를 보여드리고 있어요.",
   paywall: {
-    usedBadge: "무료 분석 3회를 모두 사용했어요",
+    usedBadge: "무료 분석 5회를 모두 사용했어요",
     title: "냉장고 한상 플러스로 계속 이용해보세요",
     body: "구독하면 사진 분석 횟수 제한 없이 계속 레시피를 추천받을 수 있어요.",
     monthlyLabel: "월간",
