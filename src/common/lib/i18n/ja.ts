@@ -98,7 +98,7 @@ const ja: Dictionary = {
   },
   demoModeNotice: "GEMINI_API_KEYが未設定のため、現在は例データでプレビューを表示しています。",
   paywall: {
-    usedBadge: "無料分析3回をすべて使い切りました",
+    usedBadge: "無料分析5回をすべて使い切りました",
     title: "冷蔵庫ごはんプラスで引き続きご利用ください",
     body: "購読すると、写真分析の回数制限なしでレシピの提案を受け続けられます。",
     monthlyLabel: "月額",

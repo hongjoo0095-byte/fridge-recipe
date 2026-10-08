@@ -13,7 +13,7 @@ const APP_KEY = "fridge-recipe";
 const SUBSCRIPTION_KEY = `${APP_KEY}:subscription:v1`;
 
 /** 무료로 분석할 수 있는 사진 횟수 — 이 횟수까지는 결제 화면을 아예 보여주지 않는다. */
-export const FREE_ANALYSIS_LIMIT = 3;
+export const FREE_ANALYSIS_LIMIT = 5; // 2026-10-08 사용자 확정: 3회→5회
 
 export type BillingCycle = "monthly" | "yearly";
 export type SubscriptionStatus = "active" | "none";
@@ -93,10 +93,10 @@ export function isPaidUser(state: SubscriptionState): boolean {
 
 /**
  * 무료 횟수(FREE_ANALYSIS_LIMIT)를 다 쓴 뒤부터 결제 화면을 보여줘야 하는지 —
- * usageCount는 "지금까지 성공한 분석 횟수"이므로, 3번째 분석이 성공한 시점에
+ * usageCount는 "지금까지 성공한 분석 횟수"이므로, 5번째 분석이 성공한 시점에
  * 이미 무료 한도를 다 쓴 것이다(>= 비교). 결과 화면(RecipeResultsScreen)에서는
  * 그 3번째 결과 자체를 가리지 않고 맨 아래에 결제 카드만 자연스럽게 붙이고,
- * 다음(4번째) 촬영 시도부터는 홈 화면(page.tsx)이 촬영 버튼 대신 이 카드로
+ * 다음(6번째) 촬영 시도부터는 홈 화면(page.tsx)이 촬영 버튼 대신 이 카드로
  * 막는다.
  */
 export function shouldShowPaywall(usageCount: number, subscription: SubscriptionState): boolean {
