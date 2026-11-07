@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useLocale } from "@/common/lib/i18n/LocaleProvider";
 import type { RecentEntry } from "@/app/lib/recentStore";
 import { PaywallCard } from "@/app/components/PaywallCard";
+import { PolicyLinks } from "@/components/PolicyPage";
 
 type PaypalNotice = { type: "verifying" | "subscribed" | "cancelled" | "error" } | null;
 
@@ -134,6 +135,7 @@ export function HomeScreen({
           </div>
         )}
       </div>
+      <PolicyLinks />
     </div>
   );
 }
