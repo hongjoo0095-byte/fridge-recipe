@@ -11,7 +11,7 @@ const notoSansKR = Noto_Sans_KR({
 });
 
 export const metadata: Metadata = {
-  title: "냉장고 한상",
+  title: "냉장고 차림표",
   description: "냉장고 사진 한 장으로 오늘 만들 수 있는 요리를 추천해드려요",
 };
 
